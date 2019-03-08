@@ -17,9 +17,9 @@ do
 			then
 				#printf "eb --search \"$TOOL-" 
 				#cat "$MPATH/$TOOL/.version" |grep set |awk -F '\\"' '{print $2 "\""}' 
-
+				#cat $MPATH/$TOOL/.version
 				ebcommand="$ebcommand --search \"$TOOL-" 
-			        ebcommand="$ebcommand $MPATH/$TOOL/.version" |grep set |awk -F '\\"' '{print $2 "\""}' 
+			        ebcommand="$ebcommand$(cat $MPATH/$TOOL/.version | grep set |awk -F '\\"' '{print $2 "\""}')" 
 				echo $ebcommand
 			#else
 			#	echo "$MPATH/$TOOL/.version not found"
