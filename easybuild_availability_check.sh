@@ -23,9 +23,9 @@ do
 				ebcommand="$ebcommand --search $TOOL" 
 				TOOL_VERIONS=$(cat $MPATH/$TOOL/.version | grep set |awk -F '\\"' '{print $2}')
 			        ebcommand_version="$ebcommand-$TOOL_VERIONS" 
-				#echo $ebcommand >> all_packages.txt
-				ebcommand_version="eb $ebcommand_version"
-				ebcommand="eb $ebcommand"
+				echo ebcommand_version >> all_packages.txt
+				#ebcommand_version="eb $ebcommand_version"
+				#ebcommand="eb $ebcommand"
 				echo  $ebcommand
 				result=$(eval $ebcommand |  grep "*" |tail -1)
 				if [ ! -z "$result" ]
