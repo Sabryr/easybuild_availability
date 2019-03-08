@@ -23,7 +23,7 @@ do
 				ebcommand="$ebcommand --search $TOOL" 
 				TOOL_VERIONS=$(cat $MPATH/$TOOL/.version | grep set |awk -F '\\"' '{print $2}')
 			        ebcommand_version="$ebcommand-$TOOL_VERIONS" 
-				echo ebcommand_version >> all_packages.txt
+				echo ebcommand_version >> all_on_abel.txt
 				ebcommand_version="eb $ebcommand_version"
 				ebcommand="eb $ebcommand"
 				#echo  $ebcommand
@@ -32,14 +32,15 @@ do
 				if [ ! -z "$result" ]
 				then
 					#echo "$result"
-					echo "$TOOL-$TOOL_VERIONS  --found--  $result" >> found.txt
+					echo "$TOOL-$TOOL_VERIONS  --found--  $result" >> found_in_easybuild.txt
 					#result_v=$(eval $ebcommand_version)
 					if [ ! -z "$result_v" ]
 					then
-						echo  "$TOOL-$TOOL_VERIONS --found-- " >> exact_version_of_defualt_found.txt
+						echo  "$TOOL-$TOOL_VERIONS --found-- " >> exact_version_in_easybuild
 					fi
 
-				#else
+				else
+					echo "$TOOL-$TOOL_VERIONS  --not-found--  $result" >> not_found_in_easybuild.txt
 				fi				
 			#else
 			#	echo "$MPATH/$TOOL/.version not found"
