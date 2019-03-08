@@ -10,7 +10,7 @@ do
 	echo $MPATH 
 	if [ -d  $MPATH ]
 	then
-		for TOOL in $(ls $MPATH  | grep discosnp) ; 
+		for TOOL in $(ls $MPATH) ; 
 		do 
 			#echo "$MPATH/$TOOL"
 			ebcommand=""
