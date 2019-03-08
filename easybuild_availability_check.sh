@@ -10,25 +10,24 @@ do
 	echo $MPATH 
 	if [ -d  $MPATH ]
 	then
-		for TOOL in $(ls $MPATH ) ; 
+		for TOOL in $(ls $MPATH  | grep discosnp) ; 
 		do 
 			#echo "$MPATH/$TOOL"
 			ebcommand=""
 			#echo "$MPATH/$TOOL/.version"
 			if [ -f  "$MPATH/$TOOL/.version" ]
 			then
-				#printf "eb --search \"$TOOL-" 
-				#cat "$MPATH/$TOOL/.version" |grep set |awk -F '\\"' '{print $2 "\""}' 
-				#cat $MPATH/$TOOL/.version
-				ebcommand="$ebcommand --search $TOOL" 
+				TOOL_SEARCH_TERM="$(echo $TOOL | tr + ' ')"
+				ebcommand="$ebcommand --search $TOOL_SEARCH_TERM" 
+				#echo $ebcommand
 				TOOL_VERIONS=$(cat $MPATH/$TOOL/.version | grep set |awk -F '\\"' '{print $2}')
 			        ebcommand_version="$ebcommand-$TOOL_VERIONS" 
-				echo ebcommand_version >> all_on_abel.txt
+				echo "$TOOL-$TOOL_VERIONS" >> all_on_abel.txt
 				ebcommand_version="eb $ebcommand_version"
 				ebcommand="eb $ebcommand"
-				#echo  $ebcommand
+				echo  $ebcommand
 				result=$(eval $ebcommand |grep -v -i patch |grep "*" |tail -1 | awk -F "/" '{print $NF}')
-				echo "$result"
+				#echo "$result"
 				if [ ! -z "$result" ]
 				then
 					#echo "$result"
