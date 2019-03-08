@@ -10,7 +10,7 @@ do
 	echo $MPATH 
 	if [ -d  $MPATH ]
 	then
-		for TOOL in $(ls $MPATH) ; 
+		for TOOL in $(ls $MPATH ) ; 
 		do 
 			#echo "$MPATH/$TOOL"
 			ebcommand=""
@@ -24,18 +24,19 @@ do
 				TOOL_VERIONS=$(cat $MPATH/$TOOL/.version | grep set |awk -F '\\"' '{print $2}')
 			        ebcommand_version="$ebcommand-$TOOL_VERIONS" 
 				echo ebcommand_version >> all_packages.txt
-				#ebcommand_version="eb $ebcommand_version"
-				#ebcommand="eb $ebcommand"
-				echo  $ebcommand
-				result=$(eval $ebcommand |  grep "*" |tail -1)
+				ebcommand_version="eb $ebcommand_version"
+				ebcommand="eb $ebcommand"
+				#echo  $ebcommand
+				result=$(eval $ebcommand |grep -v -i patch |grep "*" |tail -1 | awk -F "/" '{print $NF}')
+				echo "$result"
 				if [ ! -z "$result" ]
 				then
 					#echo "$result"
-					echo "$TOOL  --  fonud  $result" >> found.txt
-					result_v=$(eval $ebcommand_version)
+					echo "$TOOL-$TOOL_VERIONS  --found--  $result" >> found.txt
+					#result_v=$(eval $ebcommand_version)
 					if [ ! -z "$result_v" ]
 					then
-						echo  "$TOOL-$TOOL_VERIONS --  fonud " >> exact_version_of_defualt_found.txt
+						echo  "$TOOL-$TOOL_VERIONS --found-- " >> exact_version_of_defualt_found.txt
 					fi
 
 				#else
